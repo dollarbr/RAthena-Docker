@@ -37,14 +37,14 @@ COPY /config/Server/ /root/rAthena/conf/battle/
 COPY defines_post.hpp /root/rAthena/src/custom/defines_post.hpp
 
 RUN chmod a+x ./configure
-RUN ./configure --enable-epoll=yes --enable-prere=no --enable-packetver=20220330
+RUN ./configure --enable-epoll=yes --enable-prere=no --enable-vip=yes --enable-packetver=20220330
 RUN make clean && make server
 RUN chmod a+x login-server && chmod a+x char-server && chmod a+x map-server && chmod a+x web-server
 
-COPY boot.sh /root/rAthena/boot.sh
+COPY boot.sh ./boot.sh
 
-RUN dos2unix /root/rAthena/boot.sh
+RUN dos2unix ./boot.sh
 
-RUN chmod +x /root/rAthena/boot.sh
+RUN chmod +x ./boot.sh
 
-ENTRYPOINT ["bash /root/rAthena/boot.sh"]
+ENTRYPOINT ["./boot.sh"]
