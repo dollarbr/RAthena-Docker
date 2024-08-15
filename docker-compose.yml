@@ -24,7 +24,7 @@ services:
       MYSQL_PASSWORD: ragnarok
 
   phpmyadmin:
-    image: ortizflorent/ragnarok-phpmyadmin:1.0.12
+    build: ./phpmyadmin
     restart: unless-stopped
     container_name: rathena-docker-phpmyadmin-1
 #    ports:
