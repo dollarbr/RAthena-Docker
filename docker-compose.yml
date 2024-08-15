@@ -4,21 +4,20 @@
 # Source: https://github.com/florentortiz/RAthena-Docker
 # Created by: florentortiz, Mido-tw
 #
-# We highly encourage the community to share their ideas and contributions.
-# Your insights and improvements are valuable to us, and we welcome any form of
+# We highly encourage the community to share their ideas and contributions. 
+# Your insights and improvements are valuable to us, and we welcome any form of 
 # contribution, be it through issues, pull requests, or discussions.
 # Let's build something great together!
 #
 ###############################################################################
 
-services:
+services: 
   db:
     build: ./mysql
-    container_name: rathena-docker-db-1
-    restart: unless-stopped
     volumes:
       - db_data:/var/lib/mysql
-    environment: 
+    restart: unless-stopped
+    environment:
       MYSQL_ROOT_PASSWORD: ragnarokroot
       MYSQL_DATABASE: ragnarok
       MYSQL_USER: ragnarok
@@ -26,7 +25,6 @@ services:
 
   phpmyadmin:
     build: ./phpmyadmin
-    container_name: rathena-docker-phpmyadmin-1
     restart: unless-stopped
 #    ports:
 #      - 8080:80
@@ -38,8 +36,6 @@ services:
 
   ragnarok:
     build: ./server
-    container_name: rathena-docker-ragnarok-1
-    restart: unless-stopped
     links:
       - db
     depends_on:
@@ -53,40 +49,33 @@ services:
       - "8888:8888"
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
-    volumes:
-      - ./server_data:/root/rAthena:rw
 
   fluxcp:
     build: ./fluxcp
-    container_name: rathena-docker-fluxcp-1
-    restart: unless-stopped
     links:
       - db
       - ragnarok
     depends_on:
       - db
-      - ragnarok
-    tty: true
-    stdin_open: true
-#    ports:
-#      - "8081:80"
-
-  wsproxy:
-    build: ./wsproxy
-    container_name: rathena-docker-wsproxy-1
-    links:
-      - ragnarok
-    depends_on:
       - ragnarok
     tty: true
     stdin_open: true
     ports:
-      - "5999:5999"
+      - "8081:80"
+
+  wsproxy:
+    build: ./wsproxy
+    links:
+      - ragnarok
+    depends_on:
+      - ragnarok
+    tty: true
+    stdin_open: true
+#    ports:
+#      - "5999:5999"
 
 #  robrowser:
 #    build: ./robrowser
-#    container_name: rathena-docker-robrowser-1
-#    restart: unless-stopped
 #    links:
 #      - wsproxy
 #    depends_on:
@@ -98,4 +87,3 @@ services:
 
 volumes:
   db_data: {}
-  server_data: {}
