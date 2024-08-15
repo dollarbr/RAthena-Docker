@@ -14,10 +14,11 @@
 services:
   db:
     build: ./mysql
+    container_name: rathena-docker-db-1
+    restart: unless-stopped
     volumes:
       - db_data:/var/lib/mysql
-    restart: unless-stopped
-    environment: rathena-docker-db-1
+    environment: 
       MYSQL_ROOT_PASSWORD: ragnarokroot
       MYSQL_DATABASE: ragnarok
       MYSQL_USER: ragnarok
@@ -25,8 +26,8 @@ services:
 
   phpmyadmin:
     build: ./phpmyadmin
-    restart: unless-stopped
     container_name: rathena-docker-phpmyadmin-1
+    restart: unless-stopped
 #    ports:
 #      - 8080:80
     environment:
