@@ -11,4 +11,4 @@
 #
 ###############################################################################
 
-FROM --platform=linux/arm64 phpmyadmin/phpmyadmin
+FROM arm64v8/phpmyadmin
