@@ -60,8 +60,8 @@ services:
       - ragnarok
     tty: true
     stdin_open: true
-    ports:
-      - "8081:80"
+#    ports:
+#      - "8081:80"
 
   wsproxy:
     build: ./wsproxy
