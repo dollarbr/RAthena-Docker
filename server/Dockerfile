@@ -29,20 +29,20 @@ RUN apt-get install -y git \
 
 
 RUN apt-get install mysql-server -y
-RUN git clone https://github.com/dollarbr/rathena.git /root/rAthena
+RUN git clone https://github.com/sistemaemundus/rathena.git /root/rAthena
 
 WORKDIR /root/rAthena
 COPY /config/Athena/ /root/rAthena/conf/
 COPY /config/Server/ /root/rAthena/conf/battle/
 COPY defines_post.hpp /root/rAthena/src/custom/defines_post.hpp
 
-RUN ./configure --enable-epoll=yes --enable-prere=no --enable-vip=no --enable-packetver=20220330
+RUN ./configure --enable-epoll=yes --enable-prere=no --enable-packetver=20220330
 RUN make clean && make server
 RUN chmod a+x login-server && chmod a+x char-server && chmod a+x map-server && chmod a+x web-server
 
 COPY boot.sh ./boot.sh
 
 RUN dos2unix ./boot.sh
-RUN chmod +x ./boot.sh
+RUN chmod a+x ./boot.sh
 
 ENTRYPOINT ["./boot.sh"]
