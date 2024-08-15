@@ -11,4 +11,4 @@
 #
 ###############################################################################
 
-FROM phpmyadmin/phpmyadmin
+FROM --platform=linux/arm64 phpmyadmin/phpmyadmin
