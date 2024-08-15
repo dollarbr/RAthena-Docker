@@ -41,10 +41,10 @@ RUN ./configure --enable-epoll=yes --enable-prere=no --enable-packetver=20220330
 RUN make clean && make server
 RUN chmod a+x login-server && chmod a+x char-server && chmod a+x map-server && chmod a+x web-server
 
-ADD boot.sh ./boot.sh
+COPY boot.sh /root/rAthena/boot.sh
 
-RUN dos2unix ./boot.sh
+RUN dos2unix /root/rAthena/boot.sh
 
-RUN ["chmod", "+x", "./boot.sh"]
+RUN chmod +x /root/rAthena/boot.sh
 
-ENTRYPOINT ["./boot.sh"]
+ENTRYPOINT ["bash /root/rAthena/boot.sh"]
