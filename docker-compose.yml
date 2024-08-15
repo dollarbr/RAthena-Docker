@@ -13,11 +13,11 @@
 
 services:
   db:
-    image: ortizflorent/ragnarok-mysql:1.0.12
+    build: ./mysql
     volumes:
       - db_data:/var/lib/mysql
-    restart: always
-    environment:
+    restart: unless-stopped
+    environment: rathena-docker-db-1
       MYSQL_ROOT_PASSWORD: ragnarokroot
       MYSQL_DATABASE: ragnarok
       MYSQL_USER: ragnarok
@@ -25,7 +25,8 @@ services:
 
   phpmyadmin:
     image: ortizflorent/ragnarok-phpmyadmin:1.0.12
-    restart: always
+    restart: unless-stopped
+    container_name: rathena-docker-phpmyadmin-1
 #    ports:
 #      - 8080:80
     environment:
@@ -36,6 +37,8 @@ services:
 
   ragnarok:
     build: ./server
+    container_name: rathena-docker-ragnarok-1
+    restart: unless-stopped
     links:
       - db
     depends_on:
@@ -53,7 +56,9 @@ services:
       - ./server_data:/root/rAthena:rw
 
   fluxcp:
-    image: ortizflorent/ragnarok-fluxcp:1.0.12
+    build: ./fluxcp
+    container_name: rathena-docker-fluxcp-1
+    restart: unless-stopped
     links:
       - db
       - ragnarok
@@ -65,25 +70,28 @@ services:
 #    ports:
 #      - "8081:80"
 
-#  wsproxy:
-#    image: ortizflorent/ragnarok-wsproxy:1.0.12
-#    links:
-#      - ragnarok
-#    depends_on:
-#      - ragnarok
-#    tty: true
-#    stdin_open: true
+  wsproxy:
+    build: ./wsproxy
+    container_name: rathena-docker-wsproxy-1
+    links:
+      - ragnarok
+    depends_on:
+      - ragnarok
+    tty: true
+    stdin_open: true
 #    ports:
 #      - "5999:5999"
-#
-#  robrowser:
-#    image: ortizflorent/ragnarok-robrowser:1.0.12
-#    links:
-#      - wsproxy
-#    depends_on:
-#      - wsproxy
-#    tty: true
-#    stdin_open: true
+
+  robrowser:
+    build: ./robrowser
+    container_name: rathena-docker-robrowser-1
+    restart: unless-stopped
+    links:
+      - wsproxy
+    depends_on:
+      - wsproxy
+    tty: true
+    stdin_open: true
 #    ports:
 #      - "22000:22000"
 
