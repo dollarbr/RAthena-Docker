@@ -71,18 +71,18 @@ services:
 #    ports:
 #      - "8081:80"
 
-#  wsproxy:
-#    build: ./wsproxy
-#    container_name: rathena-docker-wsproxy-1
-#    links:
-#      - ragnarok
-#    depends_on:
-#      - ragnarok
-#    tty: true
-#    stdin_open: true
-#    ports:
-#      - "5999:5999"
-#
+  wsproxy:
+    build: ./wsproxy
+    container_name: rathena-docker-wsproxy-1
+    links:
+      - ragnarok
+    depends_on:
+      - ragnarok
+    tty: true
+    stdin_open: true
+    ports:
+      - "5999:5999"
+
 #  robrowser:
 #    build: ./robrowser
 #    container_name: rathena-docker-robrowser-1
