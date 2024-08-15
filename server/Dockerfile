@@ -41,10 +41,10 @@ RUN ./configure --enable-epoll=yes --enable-prere=no --enable-vip=yes --enable-p
 RUN make clean && make server
 RUN chmod a+x login-server && chmod a+x char-server && chmod a+x map-server && chmod a+x web-server
 
-COPY boot.sh /usr/local/bin/boot.sh
+COPY boot.sh ./boot.sh
 
-RUN dos2unix /usr/local/bin/boot.sh
+RUN dos2unix ./boot.sh
 
-RUN chmod +x /usr/local/bin/boot.sh
+RUN chmod +x ./boot.sh
 
 ENTRYPOINT ["./boot.sh"]
