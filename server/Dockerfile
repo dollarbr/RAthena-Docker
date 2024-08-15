@@ -41,10 +41,10 @@ RUN ./configure --enable-epoll=yes --enable-prere=no --enable-packetver=20220330
 RUN make clean && make server
 RUN chmod a+x login-server && chmod a+x char-server && chmod a+x map-server && chmod a+x web-server
 
-RUN chmod a+x boot.sh
 ADD boot.sh ./boot.sh
 
 RUN dos2unix ./boot.sh
-RUN chmod a+x ./boot.sh
+
+RUN ["chmod", "+x", "./boot.sh"]
 
 ENTRYPOINT ["./boot.sh"]
